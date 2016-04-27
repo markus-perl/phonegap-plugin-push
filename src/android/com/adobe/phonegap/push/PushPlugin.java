@@ -241,6 +241,12 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
         gForeground = true;
+
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(COM_ADOBE_PHONEGAP_PUSH, Context.MODE_PRIVATE);
+        if (prefs.getBoolean(CLEAR_NOTIFICATIONS, true)) {
+            final NotificationManager notificationManager = (NotificationManager) cordova.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancelAll();
+        }
     }
 
     @Override
